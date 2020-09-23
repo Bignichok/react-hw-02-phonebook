@@ -1,0 +1,13 @@
+.phonebookForm {
+  display: block;
+  width: 320px;
+  padding: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+input {
+  display: block;
+}
