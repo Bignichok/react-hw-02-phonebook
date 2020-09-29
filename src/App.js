@@ -57,20 +57,30 @@ class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const visibleContacts = this.getVisibleContacts();
 
     return (
       <div className="App">
         <h1>Phonebook</h1>
         <ContactForm onAddContact={this.addContact} />
+        {contacts.length > 0 && (
+          <section>
+            <h2>Contacts</h2>
 
-        <h2>Contacts</h2>
+            {contacts.length > 1 && (
+              <Filter value={filter} onChangeFilter={this.changeFilter} />
+            )}
+            {contacts.length > 1 && visibleContacts.length === 0 && (
+              <p>no results were found for your search</p>
+            )}
 
-        <Filter value={filter} onChangeFilter={this.changeFilter} />
-        {visibleContacts.length <= 0 && <p>no results were found for your search</p>}
-
-        <ContactList contacts={visibleContacts} onDeleteContact={this.deleteContact} />
+            <ContactList
+              contacts={visibleContacts}
+              onDeleteContact={this.deleteContact}
+            />
+          </section>
+        )}
       </div>
     );
   }
