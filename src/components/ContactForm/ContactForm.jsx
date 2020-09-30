@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import styles from "./ContactForm.module.css";
+import PropTypes from "prop-types";
 
 class ContactForm extends Component {
+  static defaultProps = {
+    onAddContact: () => {},
+  };
+
+  static propTypes = {
+    onAddContact: PropTypes.func,
+  };
+
   state = {
     name: "",
     number: "",
@@ -37,7 +46,7 @@ class ContactForm extends Component {
         <label htmlFor="">
           Number
           <input
-            type="tel"
+            type="number"
             name="number"
             value={this.state.number}
             required
