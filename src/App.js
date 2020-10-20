@@ -9,8 +9,6 @@ class App extends Component {
   state = {
     contacts: [],
     filter: "",
-    name: "",
-    number: "",
   };
 
   addContact = (name, number) => {
