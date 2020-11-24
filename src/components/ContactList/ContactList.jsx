@@ -3,17 +3,17 @@ import ContactsListItem from "./ContactListItem/ContactListItem";
 import PropTypes from "prop-types";
 
 const ContactList = ({ contacts, onDeleteContact }) => {
-  const contactsListItems = contacts.map(({ id, name, number }) => {
-    return (
-      <ContactsListItem
-        key={id}
-        name={name}
-        number={number}
-        onDeleteContact={() => onDeleteContact(id)}
-      />
-    );
-  });
-  return <ul>{contactsListItems}</ul>;
+ 
+  return !!contacts &&
+    <ul>{
+      contacts.map(({ id, name, number }) => (
+        <ContactsListItem
+          key={id}
+          name={name}
+          number={number}
+          onDeleteContact={() => onDeleteContact(id)}
+        />
+    ))}</ul>;
 };
 ContactList.defaultProps = {
   contacts: [],

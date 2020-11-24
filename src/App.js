@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
-import "./App.css";
 import ContactList from "./components/ContactList/ContactList";
 import ContactForm from "./components/ContactForm/ContactForm";
 import Filter from "./components/Filter/Filter";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -22,20 +22,18 @@ class App extends Component {
         name: name,
         number: number,
       };
-      this.setState((prevState) => {
-        return {
-          contacts: [...prevState.contacts, contact],
-        };
-      });
+      this.setState((prevState) => ({
+        contacts: [...prevState.contacts, contact],
+      }));
     }
   };
 
   deleteContact = (contactId) => {
-    this.setState((prevState) => {
-      return {
-        contacts: prevState.contacts.filter((contact) => contact.id !== contactId),
-      };
-    });
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(
+        (contact) => contact.id !== contactId
+      ),
+    }));
   };
 
   changeFilter = (filter) => {
