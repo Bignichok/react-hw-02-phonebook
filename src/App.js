@@ -17,13 +17,13 @@ class App extends Component {
     if (contacts.some((contact) => contact.name === name)) {
       return alert(`${name} is already in contacts`);
     } else {
-      const contact = {
+      const newContact = {
         id: uuidv4(),
         name: name,
         number: number,
       };
       this.setState((prevState) => ({
-        contacts: [...prevState.contacts, contact],
+        contacts: [...prevState.contacts, newContact],
       }));
     }
   };

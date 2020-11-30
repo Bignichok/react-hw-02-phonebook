@@ -16,9 +16,10 @@ class ContactForm extends Component {
     number: "",
   };
 
-  handleChange = (e, type) => {
+  handleChange = ({ target }) => {
+    const {name,value} = target
     this.setState({
-      [type]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -41,7 +42,7 @@ class ContactForm extends Component {
             type="text"
             name="name"
             value={this.state.name}
-            onChange={(e) => this.handleChange(e, "name")}
+            onChange={this.handleChange}
           />
         </label>
         <label htmlFor="formNumber">
