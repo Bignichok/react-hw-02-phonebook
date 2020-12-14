@@ -1,19 +1,15 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import ContactList from "./components/ContactList/ContactList";
 import ContactForm from "./components/ContactForm/ContactForm";
 import Filter from "./components/Filter/Filter";
 import "./App.css";
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: "",
-  };
+const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState("");
 
-  addContact = (name, number) => {
-    const { contacts } = this.state;
-
+  const addContact = (name, number) => {
     if (contacts.some((contact) => contact.name === name)) {
       return alert(`${name} is already in contacts`);
     } else {
@@ -22,59 +18,39 @@ class App extends Component {
         name: name,
         number: number,
       };
-      this.setState((prevState) => ({
-        contacts: [...prevState.contacts, newContact],
-      }));
+      setContacts((prevContacts) => [...prevContacts, newContact]);
     }
   };
 
-  deleteContact = (contactId) => {
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(
-        (contact) => contact.id !== contactId
-      ),
-    }));
-  };
-
-  changeFilter = (filter) => {
-    this.setState({ filter });
-  };
-
-  getVisibleContacts = () => {
-    const { contacts, filter } = this.state;
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+  const deleteContact = (contactId) =>
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact.id !== contactId)
     );
-  };
 
-  render() {
-    const { filter, contacts } = this.state;
-    const visibleContacts = this.getVisibleContacts();
+  const changeFilter = (filter) => setFilter(filter);
 
-    return (
-      <div className="App">
-        <h1>Phonebook</h1>
-        <ContactForm onAddContact={this.addContact} />
-        {contacts.length > 0 && (
-          <section>
-            <h2>Contacts</h2>
+  const visibleContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
-            {contacts.length > 1 && (
-              <Filter value={filter} onChangeFilter={this.changeFilter} />
-            )}
-            {contacts.length > 1 && visibleContacts.length === 0 && (
-              <p>no results were found for your search</p>
-            )}
+  return (
+    <div className="App">
+      <h1>Phonebook</h1>
+      <ContactForm onAddContact={addContact} />
+      {contacts.length > 0 && (
+        <section>
+          <h2>Contacts</h2>
 
-            <ContactList
-              contacts={visibleContacts}
-              onDeleteContact={this.deleteContact}
-            />
-          </section>
-        )}
-      </div>
-    );
-  }
-}
+          {contacts.length > 1 && <Filter value={filter} onChangeFilter={changeFilter} />}
+          {contacts.length > 1 && visibleContacts.length === 0 && (
+            <p>no results were found for your search</p>
+          )}
+
+          <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
+        </section>
+      )}
+    </div>
+  );
+};
 
 export default App;
